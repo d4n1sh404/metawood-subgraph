@@ -1,14 +1,15 @@
-import { BigInt } from "@graphprotocol/graph-ts"
+import {BigInt} from '@graphprotocol/graph-ts';
 import {
   Contract,
   ListingClosed,
   ListingCreated,
   NFTBuy,
   OwnershipTransferred,
-  UserSaved
-} from "../generated/Contract/Contract"
-import { ExampleEntity } from "../generated/schema"
+  UserSaved,
+} from '../generated/Contract/Contract';
+import {ExampleEntity, User, Listing} from '../generated/schema';
 
+/*
 export function handleListingClosed(event: ListingClosed): void {
   // Entities can be loaded from the store using a string ID; this ID
   // needs to be unique across all entities of the same type
@@ -56,11 +57,38 @@ export function handleListingClosed(event: ListingClosed): void {
   // - contract.getUser(...)
   // - contract.owner(...)
 }
+*/
 
-export function handleListingCreated(event: ListingCreated): void {}
+export function handleListingClosed(event: ListingClosed): void {}
+
+export function handleListingCreated(event: ListingCreated): void {
+  let listing = Listing.load(event.transaction.from.toHex());
+
+  if (!listing) {
+    listing = new Listing(event.transaction.from.toHex());
+  }
+
+  listing.creator = event.params.creator;
+  listing.price = event.params.tokenPrice;
+  listing.tokenId = event.params.tokenId;
+  listing.open = true
+
+  listing.save();
+}
 
 export function handleNFTBuy(event: NFTBuy): void {}
 
 export function handleOwnershipTransferred(event: OwnershipTransferred): void {}
 
-export function handleUserSaved(event: UserSaved): void {}
+export function handleUserSaved(event: UserSaved): void {
+  let user = User.load(event.transaction.from.toHex());
+
+  if (!user) {
+    user = new User(event.transaction.from.toHex());
+  }
+
+  user.address = event.params.user;
+  user.data = event.params.data;
+
+  user.save();
+}
