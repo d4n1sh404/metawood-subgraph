@@ -1,0 +1,16 @@
+{
+  "name": "metawood-init",
+  "license": "UNLICENSED",
+  "scripts": {
+    "codegen": "graph codegen",
+    "build": "graph build",
+    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ d4n1sh404/metawood-init",
+    "create-local": "graph create --node http://localhost:8020/ d4n1sh404/metawood-init",
+    "remove-local": "graph remove --node http://localhost:8020/ d4n1sh404/metawood-init",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 d4n1sh404/metawood-init"
+  },
+  "dependencies": {
+    "@graphprotocol/graph-cli": "0.29.0",
+    "@graphprotocol/graph-ts": "0.26.0"
+  }
+}
