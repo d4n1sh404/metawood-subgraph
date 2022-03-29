@@ -11,6 +11,8 @@ export function handleTransferSingle(event: TransferSingle): void {
  historyItem.nftAmount = event.params.value;
  historyItem.price = event.transaction.value;
 
+ historyItem.save();
+
 }
 
 export function handleSetTokenUri(event: SetTokenURI): void {
