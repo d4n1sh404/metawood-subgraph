@@ -127,6 +127,96 @@ export class Nft extends Entity {
   }
 }
 
+export class TransferHistory extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("from", Value.fromBytes(Bytes.empty()));
+    this.set("to", Value.fromBytes(Bytes.empty()));
+    this.set("nftAmount", Value.fromBigInt(BigInt.zero()));
+    this.set("price", Value.fromBigInt(BigInt.zero()));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save TransferHistory entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type TransferHistory must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("TransferHistory", id.toString(), this);
+    }
+  }
+
+  static load(id: string): TransferHistory | null {
+    return changetype<TransferHistory | null>(store.get("TransferHistory", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get from(): Bytes {
+    let value = this.get("from");
+    return value!.toBytes();
+  }
+
+  set from(value: Bytes) {
+    this.set("from", Value.fromBytes(value));
+  }
+
+  get to(): Bytes {
+    let value = this.get("to");
+    return value!.toBytes();
+  }
+
+  set to(value: Bytes) {
+    this.set("to", Value.fromBytes(value));
+  }
+
+  get nftId(): string | null {
+    let value = this.get("nftId");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set nftId(value: string | null) {
+    if (!value) {
+      this.unset("nftId");
+    } else {
+      this.set("nftId", Value.fromString(<string>value));
+    }
+  }
+
+  get nftAmount(): BigInt {
+    let value = this.get("nftAmount");
+    return value!.toBigInt();
+  }
+
+  set nftAmount(value: BigInt) {
+    this.set("nftAmount", Value.fromBigInt(value));
+  }
+
+  get price(): BigInt {
+    let value = this.get("price");
+    return value!.toBigInt();
+  }
+
+  set price(value: BigInt) {
+    this.set("price", Value.fromBigInt(value));
+  }
+}
+
 export class User extends Entity {
   constructor(id: string) {
     super();

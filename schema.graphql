@@ -11,6 +11,15 @@ type Nft @entity {
   url: String!
 }
 
+type TransferHistory @entity {
+  id: ID!
+  from: Bytes!
+  to: Bytes!
+  nftId: String
+  nftAmount: BigInt!
+  price: BigInt!
+}
+
 type User @entity {
   id: ID!
   address: Bytes!
