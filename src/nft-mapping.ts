@@ -3,7 +3,8 @@ import {TransferSingle, SetTokenURI} from '../generated/Nft/Nft';
 import {Nft,TransferHistory} from '../generated/schema';
 
 export function handleTransferSingle(event: TransferSingle): void {
- let historyItem = new TransferHistory(event.transaction.hash.toString());
+
+ let historyItem = new TransferHistory(event.transaction.hash.toHex());
 
  historyItem.from = event.params.from;
  historyItem.to = event.params.to;
