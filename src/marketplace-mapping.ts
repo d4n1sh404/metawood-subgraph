@@ -42,10 +42,10 @@ export function handleNFTBuy(event: NFTBuy): void {}
 export function handleOwnershipTransferred(event: OwnershipTransferred): void {}
 
 export function handleUserSaved(event: UserSaved): void {
-  let user = User.load(event.params.user.toString());
+  let user = User.load(event.params.user.toHex());
 
   if (!user) {
-    user = new User(event.params.user.toString());
+    user = new User(event.params.user.toHex());
   }
 
   user.address = event.params.user;
