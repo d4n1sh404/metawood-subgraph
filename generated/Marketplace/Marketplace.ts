@@ -23,12 +23,8 @@ export class ListingClosed__Params {
     this._event = event;
   }
 
-  get creator(): Address {
-    return this._event.parameters[0].value.toAddress();
-  }
-
   get listingId(): BigInt {
-    return this._event.parameters[1].value.toBigInt();
+    return this._event.parameters[0].value.toBigInt();
   }
 }
 
@@ -45,16 +41,20 @@ export class ListingCreated__Params {
     this._event = event;
   }
 
+  get listingId(): BigInt {
+    return this._event.parameters[0].value.toBigInt();
+  }
+
   get creator(): Address {
-    return this._event.parameters[0].value.toAddress();
+    return this._event.parameters[1].value.toAddress();
   }
 
   get tokenId(): BigInt {
-    return this._event.parameters[1].value.toBigInt();
+    return this._event.parameters[2].value.toBigInt();
   }
 
   get tokenPrice(): BigInt {
-    return this._event.parameters[2].value.toBigInt();
+    return this._event.parameters[3].value.toBigInt();
   }
 }
 
@@ -132,7 +132,7 @@ export class UserSaved__Params {
   }
 }
 
-export class Contract__getAllOpenListingsResultValue0Struct extends ethereum.Tuple {
+export class Marketplace__getAllOpenListingsResultValue0Struct extends ethereum.Tuple {
   get id(): BigInt {
     return this[0].toBigInt();
   }
@@ -154,7 +154,7 @@ export class Contract__getAllOpenListingsResultValue0Struct extends ethereum.Tup
   }
 }
 
-export class Contract__getLatestListingsResultValue0Struct extends ethereum.Tuple {
+export class Marketplace__getLatestListingsResultValue0Struct extends ethereum.Tuple {
   get id(): BigInt {
     return this[0].toBigInt();
   }
@@ -176,7 +176,7 @@ export class Contract__getLatestListingsResultValue0Struct extends ethereum.Tupl
   }
 }
 
-export class Contract__getListingResultListingStruct extends ethereum.Tuple {
+export class Marketplace__getListingResultListingStruct extends ethereum.Tuple {
   get id(): BigInt {
     return this[0].toBigInt();
   }
@@ -198,7 +198,7 @@ export class Contract__getListingResultListingStruct extends ethereum.Tuple {
   }
 }
 
-export class Contract__getOpenListingsResultValue0Struct extends ethereum.Tuple {
+export class Marketplace__getOpenListingsResultValue0Struct extends ethereum.Tuple {
   get id(): BigInt {
     return this[0].toBigInt();
   }
@@ -220,7 +220,7 @@ export class Contract__getOpenListingsResultValue0Struct extends ethereum.Tuple 
   }
 }
 
-export class Contract__getUserResultValue0Struct extends ethereum.Tuple {
+export class Marketplace__getUserResultValue0Struct extends ethereum.Tuple {
   get userId(): Address {
     return this[0].toAddress();
   }
@@ -230,12 +230,14 @@ export class Contract__getUserResultValue0Struct extends ethereum.Tuple {
   }
 }
 
-export class Contract extends ethereum.SmartContract {
-  static bind(address: Address): Contract {
-    return new Contract("Contract", address);
+export class Marketplace extends ethereum.SmartContract {
+  static bind(address: Address): Marketplace {
+    return new Marketplace("Marketplace", address);
   }
 
-  getAllOpenListings(): Array<Contract__getAllOpenListingsResultValue0Struct> {
+  getAllOpenListings(): Array<
+    Marketplace__getAllOpenListingsResultValue0Struct
+  > {
     let result = super.call(
       "getAllOpenListings",
       "getAllOpenListings():((uint256,address,uint256,uint256,uint8)[])",
@@ -243,12 +245,12 @@ export class Contract extends ethereum.SmartContract {
     );
 
     return result[0].toTupleArray<
-      Contract__getAllOpenListingsResultValue0Struct
+      Marketplace__getAllOpenListingsResultValue0Struct
     >();
   }
 
   try_getAllOpenListings(): ethereum.CallResult<
-    Array<Contract__getAllOpenListingsResultValue0Struct>
+    Array<Marketplace__getAllOpenListingsResultValue0Struct>
   > {
     let result = super.tryCall(
       "getAllOpenListings",
@@ -260,13 +262,13 @@ export class Contract extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      value[0].toTupleArray<Contract__getAllOpenListingsResultValue0Struct>()
+      value[0].toTupleArray<Marketplace__getAllOpenListingsResultValue0Struct>()
     );
   }
 
   getLatestListings(
     threshold: BigInt
-  ): Array<Contract__getLatestListingsResultValue0Struct> {
+  ): Array<Marketplace__getLatestListingsResultValue0Struct> {
     let result = super.call(
       "getLatestListings",
       "getLatestListings(uint256):((uint256,address,uint256,uint256,uint8)[])",
@@ -274,13 +276,15 @@ export class Contract extends ethereum.SmartContract {
     );
 
     return result[0].toTupleArray<
-      Contract__getLatestListingsResultValue0Struct
+      Marketplace__getLatestListingsResultValue0Struct
     >();
   }
 
   try_getLatestListings(
     threshold: BigInt
-  ): ethereum.CallResult<Array<Contract__getLatestListingsResultValue0Struct>> {
+  ): ethereum.CallResult<
+    Array<Marketplace__getLatestListingsResultValue0Struct>
+  > {
     let result = super.tryCall(
       "getLatestListings",
       "getLatestListings(uint256):((uint256,address,uint256,uint256,uint8)[])",
@@ -291,25 +295,25 @@ export class Contract extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      value[0].toTupleArray<Contract__getLatestListingsResultValue0Struct>()
+      value[0].toTupleArray<Marketplace__getLatestListingsResultValue0Struct>()
     );
   }
 
-  getListing(listingId: BigInt): Contract__getListingResultListingStruct {
+  getListing(listingId: BigInt): Marketplace__getListingResultListingStruct {
     let result = super.call(
       "getListing",
       "getListing(uint256):((uint256,address,uint256,uint256,uint8))",
       [ethereum.Value.fromUnsignedBigInt(listingId)]
     );
 
-    return changetype<Contract__getListingResultListingStruct>(
+    return changetype<Marketplace__getListingResultListingStruct>(
       result[0].toTuple()
     );
   }
 
   try_getListing(
     listingId: BigInt
-  ): ethereum.CallResult<Contract__getListingResultListingStruct> {
+  ): ethereum.CallResult<Marketplace__getListingResultListingStruct> {
     let result = super.tryCall(
       "getListing",
       "getListing(uint256):((uint256,address,uint256,uint256,uint8))",
@@ -320,13 +324,13 @@ export class Contract extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      changetype<Contract__getListingResultListingStruct>(value[0].toTuple())
+      changetype<Marketplace__getListingResultListingStruct>(value[0].toTuple())
     );
   }
 
   getOpenListings(
     _user: Address
-  ): Array<Contract__getOpenListingsResultValue0Struct> {
+  ): Array<Marketplace__getOpenListingsResultValue0Struct> {
     let result = super.call(
       "getOpenListings",
       "getOpenListings(address):((uint256,address,uint256,uint256,uint8)[])",
@@ -334,13 +338,15 @@ export class Contract extends ethereum.SmartContract {
     );
 
     return result[0].toTupleArray<
-      Contract__getOpenListingsResultValue0Struct
+      Marketplace__getOpenListingsResultValue0Struct
     >();
   }
 
   try_getOpenListings(
     _user: Address
-  ): ethereum.CallResult<Array<Contract__getOpenListingsResultValue0Struct>> {
+  ): ethereum.CallResult<
+    Array<Marketplace__getOpenListingsResultValue0Struct>
+  > {
     let result = super.tryCall(
       "getOpenListings",
       "getOpenListings(address):((uint256,address,uint256,uint256,uint8)[])",
@@ -351,7 +357,7 @@ export class Contract extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      value[0].toTupleArray<Contract__getOpenListingsResultValue0Struct>()
+      value[0].toTupleArray<Marketplace__getOpenListingsResultValue0Struct>()
     );
   }
 
@@ -378,17 +384,19 @@ export class Contract extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigIntArray());
   }
 
-  getUser(userAddress: Address): Contract__getUserResultValue0Struct {
+  getUser(userAddress: Address): Marketplace__getUserResultValue0Struct {
     let result = super.call("getUser", "getUser(address):((address,string))", [
       ethereum.Value.fromAddress(userAddress)
     ]);
 
-    return changetype<Contract__getUserResultValue0Struct>(result[0].toTuple());
+    return changetype<Marketplace__getUserResultValue0Struct>(
+      result[0].toTuple()
+    );
   }
 
   try_getUser(
     userAddress: Address
-  ): ethereum.CallResult<Contract__getUserResultValue0Struct> {
+  ): ethereum.CallResult<Marketplace__getUserResultValue0Struct> {
     let result = super.tryCall(
       "getUser",
       "getUser(address):((address,string))",
@@ -399,7 +407,7 @@ export class Contract extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      changetype<Contract__getUserResultValue0Struct>(value[0].toTuple())
+      changetype<Marketplace__getUserResultValue0Struct>(value[0].toTuple())
     );
   }
 

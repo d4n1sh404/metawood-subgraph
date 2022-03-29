@@ -3,36 +3,51 @@ schema:
   file: schema.graphql
 dataSources:
   - kind: ethereum
-    name: Contract
+    name: Marketplace
     network: mumbai
     source:
-      address: "0x09916186Ca8B05572aAA8B7c030Fe92e0ea18620"
-      abi: Contract
-      startBlock: 25698970
+      address: "0x856FD9e9a39b09B0A4c539A73Ef3E15e51C2F1e5"
+      abi: Marketplace
+      startBlock: 25714646
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
-        - ListingClosed
-        - ListingCreated
-        - NFTBuy
-        - OwnershipTransferred
-        - UserSaved
         - User
         - Listing
       abis:
-        - name: Contract
-          file: Contract/abis/Contract.json
+        - name: Marketplace
+          file: Marketplace/abis/MetawoodMarketPlace.json
       eventHandlers:
-        - event: ListingClosed(indexed address,uint256)
+        - event: ListingClosed(uint256)
           handler: handleListingClosed
-        - event: ListingCreated(indexed address,uint256,uint256)
+        - event: ListingCreated(uint256,indexed address,uint256,uint256)
           handler: handleListingCreated
         - event: NFTBuy(uint256,uint256,uint256,indexed address)
           handler: handleNFTBuy
-        - event: OwnershipTransferred(indexed address,indexed address)
-          handler: handleOwnershipTransferred
         - event: UserSaved(indexed address,string)
           handler: handleUserSaved
-      file: Contract/Contract.wasm
+      file: Marketplace/Marketplace.wasm
+  - kind: ethereum
+    name: Nft
+    network: mumbai
+    source:
+      address: "0x5851022B2619C4Fa243F12f2E1b7027Bb24101e1"
+      abi: Nft
+      startBlock: 25714646
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Nft
+      abis:
+        - name: Nft
+          file: Nft/abis/MetawoodNft.json
+      eventHandlers:
+        - event: SetTokenURI(uint256,string)
+          handler: handleSetTokenUri
+        - event: TransferSingle(indexed address,indexed address,indexed address,uint256,uint256)
+          handler: handleTransferSingle
+      file: Nft/Nft.wasm
