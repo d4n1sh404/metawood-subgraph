@@ -19,7 +19,6 @@ type TransferHistory @entity {
   nftId: String
   nftAmount: BigInt!
   price: BigInt!
-  nft: Nft! @derivedFrom(field: "id")
 }
 
 type User @entity {
