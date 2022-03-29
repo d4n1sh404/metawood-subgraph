@@ -10,13 +10,16 @@ type Listing @entity {
 type Nft @entity {
   id: ID!
   url: String!
+  name: String!
+  description: String!
+  image: String!
 }
 
 type TransferHistory @entity {
   id: ID!
   from: Bytes!
   to: Bytes!
-  nftId: String
+  nftId: String!
   nftAmount: BigInt!
   price: BigInt!
 }
@@ -24,8 +27,8 @@ type TransferHistory @entity {
 type User @entity {
   id: ID!
   address: Bytes!
-  name: String
-  image: String
-  email: String
+  name: String!
+  image: String!
+  userName: String!
   data: String!
 }

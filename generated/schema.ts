@@ -100,6 +100,9 @@ export class Nft extends Entity {
     this.set("id", Value.fromString(id));
 
     this.set("url", Value.fromString(""));
+    this.set("name", Value.fromString(""));
+    this.set("description", Value.fromString(""));
+    this.set("image", Value.fromString(""));
   }
 
   save(): void {
@@ -135,6 +138,33 @@ export class Nft extends Entity {
   set url(value: string) {
     this.set("url", Value.fromString(value));
   }
+
+  get name(): string {
+    let value = this.get("name");
+    return value!.toString();
+  }
+
+  set name(value: string) {
+    this.set("name", Value.fromString(value));
+  }
+
+  get description(): string {
+    let value = this.get("description");
+    return value!.toString();
+  }
+
+  set description(value: string) {
+    this.set("description", Value.fromString(value));
+  }
+
+  get image(): string {
+    let value = this.get("image");
+    return value!.toString();
+  }
+
+  set image(value: string) {
+    this.set("image", Value.fromString(value));
+  }
 }
 
 export class TransferHistory extends Entity {
@@ -144,6 +174,7 @@ export class TransferHistory extends Entity {
 
     this.set("from", Value.fromBytes(Bytes.empty()));
     this.set("to", Value.fromBytes(Bytes.empty()));
+    this.set("nftId", Value.fromString(""));
     this.set("nftAmount", Value.fromBigInt(BigInt.zero()));
     this.set("price", Value.fromBigInt(BigInt.zero()));
   }
@@ -191,21 +222,13 @@ export class TransferHistory extends Entity {
     this.set("to", Value.fromBytes(value));
   }
 
-  get nftId(): string | null {
+  get nftId(): string {
     let value = this.get("nftId");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toString();
-    }
+    return value!.toString();
   }
 
-  set nftId(value: string | null) {
-    if (!value) {
-      this.unset("nftId");
-    } else {
-      this.set("nftId", Value.fromString(<string>value));
-    }
+  set nftId(value: string) {
+    this.set("nftId", Value.fromString(value));
   }
 
   get nftAmount(): BigInt {
@@ -233,6 +256,9 @@ export class User extends Entity {
     this.set("id", Value.fromString(id));
 
     this.set("address", Value.fromBytes(Bytes.empty()));
+    this.set("name", Value.fromString(""));
+    this.set("image", Value.fromString(""));
+    this.set("userName", Value.fromString(""));
     this.set("data", Value.fromString(""));
   }
 
@@ -270,55 +296,31 @@ export class User extends Entity {
     this.set("address", Value.fromBytes(value));
   }
 
-  get name(): string | null {
+  get name(): string {
     let value = this.get("name");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toString();
-    }
+    return value!.toString();
   }
 
-  set name(value: string | null) {
-    if (!value) {
-      this.unset("name");
-    } else {
-      this.set("name", Value.fromString(<string>value));
-    }
+  set name(value: string) {
+    this.set("name", Value.fromString(value));
   }
 
-  get image(): string | null {
+  get image(): string {
     let value = this.get("image");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toString();
-    }
+    return value!.toString();
   }
 
-  set image(value: string | null) {
-    if (!value) {
-      this.unset("image");
-    } else {
-      this.set("image", Value.fromString(<string>value));
-    }
+  set image(value: string) {
+    this.set("image", Value.fromString(value));
   }
 
-  get email(): string | null {
-    let value = this.get("email");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toString();
-    }
+  get userName(): string {
+    let value = this.get("userName");
+    return value!.toString();
   }
 
-  set email(value: string | null) {
-    if (!value) {
-      this.unset("email");
-    } else {
-      this.set("email", Value.fromString(<string>value));
-    }
+  set userName(value: string) {
+    this.set("userName", Value.fromString(value));
   }
 
   get data(): string {

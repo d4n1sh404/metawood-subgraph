@@ -51,15 +51,17 @@ export function handleUserSaved(event: UserSaved): void {
   user.address = event.params.user;
   user.data = event.params.data;
 
-  // let userData = ipfs.cat(user.data.split('/').pop());
 
-  // if (userData) {
-  //   let data = json.fromBytes(userData as Bytes).toObject();
+  let getIPFSData = ipfs.cat(event.params.data.split('/').pop());
+  let data = json.fromBytes(getIPFSData as Bytes).toObject();
 
-  //   user.name = data.get('name')!.toString();
-  //   user.email = data.get('email')!.toString();
-  //   user.image = data.get('image')!.toString();
-  // }
+  if (data != null) {
+
+      user.name = data.get("name")!.toString();
+      user.userName = data.get("userName")!.toString();
+      user.image = data.get("image")!.toString();
+
+  }
 
   user.save();
 }
