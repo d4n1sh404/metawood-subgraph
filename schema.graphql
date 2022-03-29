@@ -4,6 +4,7 @@ type Listing @entity {
   tokenId: BigInt!
   price: BigInt!
   open: Boolean!
+  nft: Nft!
 }
 
 type Nft @entity {
@@ -18,6 +19,7 @@ type TransferHistory @entity {
   nftId: String
   nftAmount: BigInt!
   price: BigInt!
+  nft: Nft! @derivedFrom(field: "id")
 }
 
 type User @entity {

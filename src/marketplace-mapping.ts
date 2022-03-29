@@ -32,6 +32,7 @@ export function handleListingCreated(event: ListingCreated): void {
   listing.price = event.params.tokenPrice;
   listing.tokenId = event.params.tokenId;
   listing.open = true;
+  listing.nft = event.params.tokenId.toString();
 
   listing.save();
 }

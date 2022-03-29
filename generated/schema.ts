@@ -20,6 +20,7 @@ export class Listing extends Entity {
     this.set("tokenId", Value.fromBigInt(BigInt.zero()));
     this.set("price", Value.fromBigInt(BigInt.zero()));
     this.set("open", Value.fromBoolean(false));
+    this.set("nft", Value.fromString(""));
   }
 
   save(): void {
@@ -82,6 +83,15 @@ export class Listing extends Entity {
   set open(value: boolean) {
     this.set("open", Value.fromBoolean(value));
   }
+
+  get nft(): string {
+    let value = this.get("nft");
+    return value!.toString();
+  }
+
+  set nft(value: string) {
+    this.set("nft", Value.fromString(value));
+  }
 }
 
 export class Nft extends Entity {
@@ -136,6 +146,7 @@ export class TransferHistory extends Entity {
     this.set("to", Value.fromBytes(Bytes.empty()));
     this.set("nftAmount", Value.fromBigInt(BigInt.zero()));
     this.set("price", Value.fromBigInt(BigInt.zero()));
+    this.set("nft", Value.fromString(""));
   }
 
   save(): void {
@@ -214,6 +225,15 @@ export class TransferHistory extends Entity {
 
   set price(value: BigInt) {
     this.set("price", Value.fromBigInt(value));
+  }
+
+  get nft(): string {
+    let value = this.get("nft");
+    return value!.toString();
+  }
+
+  set nft(value: string) {
+    this.set("nft", Value.fromString(value));
   }
 }
 
