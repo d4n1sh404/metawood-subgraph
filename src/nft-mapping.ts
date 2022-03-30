@@ -24,14 +24,13 @@ export function handleSetTokenUri(event: SetTokenURI): void {
   nft.url = event.params._uri;
 
   let getIPFSData = ipfs.cat(event.params._uri.split('/').pop());
-  let data = json.fromBytes(getIPFSData as Bytes).toObject();
 
-  if (data != null) {
+  if (getIPFSData !== null) {
+    let data = json.fromBytes(getIPFSData as Bytes).toObject();
 
-      nft.name = data.get("name")!.toString();
-      nft.description = data.get("description")!.toString();
-      nft.image = data.get("image")!.toString();
-
+    nft.name = data.get('name')!.toString();
+    nft.description = data.get('description')!.toString();
+    nft.image = data.get('image')!.toString();
   }
 
   nft.save();
